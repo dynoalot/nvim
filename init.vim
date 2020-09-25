@@ -50,7 +50,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
 Plug 'preservim/nerdtree'
-Plug 'w0rp/ale'
+Plugin 'dense-analysis/ale'
 
 " Color themes
 Plug 'colepeters/spacemacs-theme.vim'
@@ -129,6 +129,8 @@ let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
 
 let g:ale_fix_on_save = 1
+highlight clear ALEErrorSign
+highlight clear ALEWarningSign
 
 nnoremap ; :
 vnoremap ; :
@@ -151,11 +153,11 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
 nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
-noremap <C-J> <C-W>j
-noremap <C-K> <C-W>k
-noremap <C-H> <C-W>h
-noremap <C-L> <C-W>l
 nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30<CR>
 nnoremap <Leader>pf :Files<CR>
 nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
@@ -257,6 +259,11 @@ nmap <F2> <Plug>(coc-rename)
 " Remap for format selected region
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup auto_comment
+    au!
+    au FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+augroup END
 
 augroup mygroup
     autocmd!
